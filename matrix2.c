@@ -24,7 +24,7 @@ double ts,te, Maccess;
   }
 
   
-  for(i=0; i<NCOLS*NROWS; i++){
+  for(i=0; i<NROWS*NCOLS; i++){
   	table[i]=1.0;
   }
 
