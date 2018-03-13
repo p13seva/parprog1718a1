@@ -5,8 +5,8 @@
 // compile like:  gcc -Wall -O2 -DNROWS=10000 matrix1.c -o matrix1
 
 
-#define NCOLS 100
-
+#define NCOLS 100 // παραμένει σταθερό
+#define NROWS  100000
 void get_walltime(double *wct) {
   struct timeval tp;
   gettimeofday(&tp,NULL);
@@ -14,41 +14,45 @@ void get_walltime(double *wct) {
 }
 
 
-int main() {
+int main(int argc, char *argv[]) {
+int i,j;
+double sum = 0.0;
 double *table;
-double ts,te;
+double ts,te, Maccess;
 
 
-  table = (double *)malloc(NROWS*NCOLS*sizeof(double)); 
+  table = (double *)malloc(NCOLS*NROWS*sizeof(double)); // δυναμική δεσμευση μνήμης
   if (table==NULL) {
     printf("alloc error!\n");
     exit(1);
   }
 
-  // warmup
+ 
 
-  // ...your code here...
+  for(i=0; i<NCOLS*NROWS; i++){
+  	table[i]=1.0;
+  }
 
-  // get starting time (double, seconds) 
   get_walltime(&ts);
   
-  // workload
 
-  // ...your code here...
+  // προσπελαση κατα γραμμη
 
-  // get ending time
+  for (i=0;i<NROWS;i++){
+  	for(j=0;j<NCOLS;j++){
+  		sum+=table[i][j];
+ 	 }
+  }
   get_walltime(&te);
 
-  // check results
-  
-  // ...your code here...
+  printf("Accesses = %f\n", sum);
 
-  // print time elapsed and/or Maccesses/sec
-  
-  // ...your code here...  
-  
+//To Maccess ειναι τα  Memory_accesses per second
+  Maccess=((double)NROWS*NCOLS)/((te-ts)*1e6);
+
+  printf("Maccesses/sec = %f\n" ,Maccess);
+
   free(table);
 
   return 0;
 }
-
