@@ -40,7 +40,7 @@ double ts,te, Maccess;
 
   for (i=0;i<NROWS;i++){
   	for(j=0;j<NCOLS;j++){
-  		sum+=table[i][j];
+  		sum+=table[j*NCOLS+i];
  	 }
   }
   get_walltime(&te);
